@@ -1,0 +1,47 @@
+<div class="main-container">
+  <h2>Guess the Artist</h2>
+  <p>Round: {{ roundCounter }}</p>
+  <p *ngIf="points > 0">Your Score: {{ points }}</p>
+  <app-button [buttonText]="'Play/Pause'" (click)="playAudio()"></app-button>
+  <input
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    [value]="volume"
+    (input)="setVolume($event)"
+  />
+  <progress [value]="currentTime" [max]="duration"></progress>
+  <div class="options-container">
+    <app-button
+      *ngFor="let option of options"
+      [buttonText]="option"
+      [ngClass]="buttonColorControl(option)"
+      (click)="setAnswer(option)"
+    ></app-button>
+  </div>
+  <div *ngIf="selectedAnswer" class="selected-answer">
+    <div *ngIf="selectedAnswer === correctArtist; else incorrectText">
+      <h3>Correct!</h3>
+    </div>
+
+    <div>
+      <ng-template #incorrectText>
+        <h3>Incorrect! Game over!</h3>
+      </ng-template>
+    </div>
+
+    <div>
+      <img
+        [src]="track.album.images[1].url"
+        alt="Album Art"
+        class="album-art"
+      />
+    </div>
+
+    <app-button
+      [buttonText]="'Continue'"
+      (click)="handleContinue()"
+    ></app-button>
+  </div>
+</div>

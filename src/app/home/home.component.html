@@ -1,0 +1,37 @@
+<div *ngIf="authLoading || configLoading">Loading...</div>
+
+<div class="main-container">
+  <div>
+    <h1>Who's Who</h1>
+  </div>
+
+  <div class="selections">
+    <div *ngIf="!authLoading && !configLoading" [formGroup]="form">
+      Genre:
+      <select formControlName="genre">
+        <option [value]=""></option>
+        <option [value]="genre" *ngFor="let genre of genres">
+          {{ genre }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="!authLoading && !configLoading" [formGroup]="form">
+      Difficulty:
+      <select formControlName="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="showError" class="error-message">
+    <p>Please select a genre before starting the game.</p>
+  </div>
+
+  <div>
+    <app-button buttonText="Play" (click)="startGame()"></app-button>
+    <app-button buttonText="Leaderboard" routerLink="/leaderboard"></app-button>
+  </div>
+</div>
